@@ -1,29 +1,33 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class PlayerDetector : MonoBehaviour
 {
-    [SerializeField] private float _rayLength;
-    [SerializeField] private LayerMask _targetLayer;
+    // [SerializeField] private float _rayLength;
+    // [SerializeField] private LayerMask _targetLayer;
 
-    private Ray _ray;
-    private Transform _closeTarget;
+    // private Ray _ray;
+    private Transform _detectedTarget;
 
-    private float minDistance = float.MaxValue;
+    // private float minDistance = float.MaxValue;
     
-    private List<GameObject> _target = new List<GameObject>();
+    private List<GameObject> _targets = new List<GameObject>();
 
-    private void Update()
+    private void FixedUpdate()
     {
-        RayShot();
+        if (_targets == null || _targets.Count == 0) return;
+
+        Transform closeTarget = GetClosestTargetTransform();
+        
+        RayShot(closeTarget);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("타겟 들어옴");
-            _target.Add(other.gameObject);
+            _targets.Add(other.gameObject);
         }
     }
 
@@ -31,40 +35,74 @@ public class PlayerDetector : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("타겟 나감");
-            _target.Remove(other.gameObject);
+            _targets.Remove(other.gameObject);
+            
+            if(_targets.Count == 0) _detectedTarget = null;
         }
     }
 
     private void OnDrawGizmos()
     {
+        if (_detectedTarget == null) return;
+        
         Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, _detectedTarget.position);
 
-        Gizmos.DrawRay(_ray.origin, _ray.direction * _rayLength);
+        // Gizmos.DrawRay(_ray.origin, _ray.direction * _rayLength);
     }
 
-    private void RayShot()
+    // dd
+    private void RayShot(Transform target)
     {
+        Vector3 vectorToTarget = target.position - transform.position;
+        Vector3 dir = vectorToTarget.normalized;
+        float distance = vectorToTarget.magnitude;
         
-        _ray = new Ray(transform.position,);
-
+        Ray ray = new Ray(transform.position, dir);
         RaycastHit hit;
 
-        if (Physics.Raycast(_ray, out hit, _rayLength))
+        if (Physics.Raycast(ray, out hit, distance))
         {
             if(hit.transform.CompareTag("Enemy"))
             {
-                Debug.Log($"{hit.transform.name} 감지");
+                _detectedTarget = hit.transform;
             }
-            
+            else
+            {
+                _detectedTarget = null;
+            }
+        }
+        else
+        {
+            _detectedTarget = null;
         }
     }
 
+    private Transform GetClosestTargetTransform()
+    {
+        if (_targets == null || _targets.Count == 0) return null;
+        
+        Transform target = _targets[0].transform;
+        float distance = Vector3.Distance(transform.position, target.position);
 
+        for (int i = 1; i < _targets.Count; i++)
+        {
+            float CurrDist = Vector3.Distance(transform.position, _targets[i].transform.position);
+
+            if (CurrDist < distance)
+            {
+                distance = CurrDist;
+                target = _targets[i].transform;
+            }
+        }
+        
+        return target;
+    }
+
+
+    /*
     private void DectectTarget()
     {
-        // 1. 가까운 적 탐색하여 트랜스폼 필드변수에 담아두기
-        
         foreach (GameObject enemy in _closeTarget.transform)
         {
             float _distance = Vector3.Distance(transform.position, enemy.transform.position);
@@ -74,5 +112,5 @@ public class PlayerDetector : MonoBehaviour
                 minDistance = _distance;
             }
         }
-    }
+    }*/
 }
