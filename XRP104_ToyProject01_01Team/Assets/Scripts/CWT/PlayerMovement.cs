@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
+    Vector3 _moveMent;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -14,25 +16,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        HandleMovement();
+        Rotation();
         Move();
     }
 
     private void Move()
     {
-        float direction = Input.GetAxisRaw("Vertical");
-
-        Vector3 newVelocity = new Vector3
-        {
-            x = transform.forward.x * _moveSpeed * direction,
-            y = _rigidbody.linearVelocity.y,
-            z = transform.forward.z * _moveSpeed * direction
-        };
-
-        _rigidbody.linearVelocity = newVelocity;
+        if (_moveMent == Vector3.zero) return;
+        _rigidbody.linearVelocity = transform.forward * _moveSpeed;
     }
 
     private void Rotation()
     {
-        
+        if (_moveMent == Vector3.zero) return;
+        transform.rotation = Quaternion.LookRotation(_moveMent);
+
+    }
+
+    private void HandleMovement()
+    {
+        float z = Input.GetAxisRaw("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+
+        _moveMent = new Vector3 (x,0,z).normalized;
     }
 }
