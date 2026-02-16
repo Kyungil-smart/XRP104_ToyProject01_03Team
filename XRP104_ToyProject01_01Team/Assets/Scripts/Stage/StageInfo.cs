@@ -23,6 +23,14 @@ public class StageInfo : SceneSingleton<StageInfo>
         Init();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.GamePause(true);
+        }
+    }
+
     private void Init()
     {
         Instantiate(Map, transform);
