@@ -10,8 +10,12 @@ public class StageInfo : SceneSingleton<StageInfo>
     [field: SerializeField] public float StageTimeLimit { get; private set; }
 
     private HashSet<EnemyController> _enemies = new HashSet<EnemyController>();
-    public event Action OnStageClear;
     public bool HasRemainingEnemies => _enemies.Count > 0;
+
+    private float _startTime;
+    public float ElapsedTime => -(_startTime - Time.time);
+    
+    public event Action OnStageClear;
     
     private void Awake()
     {
@@ -22,6 +26,7 @@ public class StageInfo : SceneSingleton<StageInfo>
     private void Init()
     {
         Instantiate(Map, transform);
+        _startTime = Time.time;
     }
 
     public void AddEnemy(EnemyController enemy)
@@ -32,10 +37,17 @@ public class StageInfo : SceneSingleton<StageInfo>
     public void RemoveEnemy(EnemyController enemy)
     {
         _enemies.Remove(enemy);
+    }
 
-        if (!HasRemainingEnemies)
+    public void StageClear()
+    {
+        OnStageClear?.Invoke();
+        
+        GameClearUI clearUI;
+        if (UIManager.Instance.TryGet(out clearUI))
         {
-            OnStageClear?.Invoke();
+            clearUI.gameObject.SetActive(true);
+            clearUI.RefreshClearTime(ElapsedTime);
         }
     }
 }
