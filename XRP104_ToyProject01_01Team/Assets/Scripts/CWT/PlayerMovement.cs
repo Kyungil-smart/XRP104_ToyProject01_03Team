@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rigidbody;
 
     Vector3 _moveMent;
+    public bool isMoving => _moveMent != Vector3.zero;
 
     private void Awake()
     {

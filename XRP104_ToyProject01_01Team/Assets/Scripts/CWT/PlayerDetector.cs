@@ -9,9 +9,10 @@ public class PlayerDetector : MonoBehaviour
 
     // private Ray _ray;
     private Transform _detectedTarget;
+    public bool isDetected => _detectedTarget != null;
 
     // private float minDistance = float.MaxValue;
-    
+
     private List<GameObject> _targets = new List<GameObject>();
 
     private void FixedUpdate()
