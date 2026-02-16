@@ -1,11 +1,12 @@
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GamePauseUI : MonoBehaviour, IUI
 {
-    [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] private TextMeshProUGUI _timeText;
     [SerializeField] private Button _titleButton;
     [SerializeField] private Button _continueButton;
 
@@ -36,6 +37,13 @@ public class GamePauseUI : MonoBehaviour, IUI
     private void Activate(bool isActive)
     {
         gameObject.SetActive(isActive);
+        
+        if(isActive) RefreshElapsedTimeText();
+    }
+
+    private void RefreshElapsedTimeText()
+    {
+        _timeText.text = $"Elapsed Time : {StageInfo.Instance.ElapsedTime.ToString("0.00")} sec";
     }
 
     private void ToTitle()

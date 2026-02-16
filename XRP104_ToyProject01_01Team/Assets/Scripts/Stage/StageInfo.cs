@@ -15,13 +15,13 @@ public class StageInfo : SceneSingleton<StageInfo>
     private float _startTime;
     public float ElapsedTime => -(_startTime - Time.time);
     
-    public event Action OnStageClear;
-    
     private void Awake()
     {
         SceneSingletonInit();
         Init();
     }
+    
+    private void Start() => GameManager.Instance.GameStart();
 
     private void Update()
     {
@@ -45,17 +45,5 @@ public class StageInfo : SceneSingleton<StageInfo>
     public void RemoveEnemy(EnemyController enemy)
     {
         _enemies.Remove(enemy);
-    }
-
-    public void StageClear()
-    {
-        OnStageClear?.Invoke();
-        
-        GameClearUI clearUI;
-        if (UIManager.Instance.TryGet(out clearUI))
-        {
-            clearUI.gameObject.SetActive(true);
-            clearUI.RefreshClearTime(ElapsedTime);
-        }
     }
 }

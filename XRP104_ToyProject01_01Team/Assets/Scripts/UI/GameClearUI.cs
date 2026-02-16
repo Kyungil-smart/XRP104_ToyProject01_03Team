@@ -8,20 +8,33 @@ public class GameClearUI : MonoBehaviour, IUI
     [SerializeField] private TextMeshProUGUI _clearTime;
     [SerializeField] private Button _titleButton;
     
-    private void Awake() => Init();
-    private void OnEnable() => _titleButton.onClick.AddListener(ToTitle);
-    private void OnDisable() => _titleButton.onClick.RemoveListener(ToTitle);
-    private void OnDestroy() => UIManager.Instance.Unregister<GameClearUI>();
+    private void Awake()        => Init();
+    private void OnEnable()     => _titleButton.onClick.AddListener(ToTitle);
+    private void Start()        => gameObject.SetActive(false);
+    private void OnDisable()    => _titleButton.onClick.RemoveListener(ToTitle);
+    private void OnDestroy()    => Dispose();
     
     private void Init()
     {
         UIManager.Instance.Register(this);
-        gameObject.SetActive(false);
+        GameManager.Instance.OnStageClear += Activate;
     }
 
-    public void RefreshClearTime(float time)
+    private void Dispose()
     {
-        _clearTime.text = $"Clear Time : {time.ToString("0.00")} sec";
+        UIManager.Instance.Unregister<GameClearUI>();
+        GameManager.Instance.OnStageClear -= Activate;
+    }
+
+    private void Activate()
+    {
+        gameObject.SetActive(true);
+        RefreshClearTime();
+    }
+
+    public void RefreshClearTime()
+    {
+        _clearTime.text = $"Clear Time : {StageInfo.Instance.ElapsedTime.ToString("0.00")} sec";
     }
 
     private void ToTitle()
