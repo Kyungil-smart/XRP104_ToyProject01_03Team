@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8409820164877468900}
   - component: {fileID: 7246214331594066350}
   - component: {fileID: 4078336920458628417}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Spaceport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +127,10 @@ PrefabInstance:
     - target: {fileID: 4606917738391197512, guid: d0d3fa714339c06469755b863d5b2267, type: 3}
       propertyPath: m_Name
       value: struct_Spaceport_A_yup
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606917738391197512, guid: d0d3fa714339c06469755b863d5b2267, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

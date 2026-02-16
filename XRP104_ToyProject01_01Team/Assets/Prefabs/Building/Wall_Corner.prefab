@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861421300627422455}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_Corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +83,10 @@ PrefabInstance:
     - target: {fileID: 6460635131970814218, guid: b02aa011e06208c4995b38a14bc466de, type: 3}
       propertyPath: m_Name
       value: struct_Wall_A_Corner_yup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6460635131970814218, guid: b02aa011e06208c4995b38a14bc466de, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

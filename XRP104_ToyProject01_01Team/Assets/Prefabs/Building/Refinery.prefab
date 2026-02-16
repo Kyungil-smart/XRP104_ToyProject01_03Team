@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6452390329509516380}
   - component: {fileID: 5037942201412881355}
   - component: {fileID: 8094532763148993163}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Refinery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,6 +87,10 @@ PrefabInstance:
     - target: {fileID: 3489344766907041493, guid: 72f72385ec51b7246a0d2960a25288df, type: 3}
       propertyPath: m_Name
       value: struct_Refinery_A_yup
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489344766907041493, guid: 72f72385ec51b7246a0d2960a25288df, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4262503358762097775, guid: 72f72385ec51b7246a0d2960a25288df, type: 3}
       propertyPath: m_LocalPosition.x
