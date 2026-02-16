@@ -16,6 +16,6 @@ public class ExitPortal : MonoBehaviour
     {
         if (StageInfo.Instance.HasRemainingEnemies) return;
 
-        StageInfo.Instance.StageClear();
+        GameManager.Instance.StageClear();
     }
 }

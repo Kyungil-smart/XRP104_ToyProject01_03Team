@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 885875a30b1904b45bc4de356ea91e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeText: {fileID: 1530666481632582374}
+  _timeText: {fileID: 1530666481632582374}
   _titleButton: {fileID: 2275671017961533949}
   _continueButton: {fileID: 5078291751602461608}
 --- !u!1 &6945022315022102859

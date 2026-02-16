@@ -29,6 +29,8 @@ public class GameManager : Singleton<GameManager>
 
     public void GamePause(bool isPaused)
     {
+        if (!IsGameRunning) return;
+        
         IsGamePaused = isPaused;
         OnGamePause?.Invoke(isPaused);
     }
@@ -37,5 +39,11 @@ public class GameManager : Singleton<GameManager>
     {
         IsGameRunning = false;
         OnGameOver?.Invoke();
+    }
+
+    public void StageClear()
+    {
+        OnStageClear?.Invoke();
+        GameOver();
     }
 }
