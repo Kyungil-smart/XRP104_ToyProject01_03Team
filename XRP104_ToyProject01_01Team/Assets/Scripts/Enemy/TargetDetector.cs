@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FOVMapping;
 using UnityEngine;
 
 public class TargetDetector : MonoBehaviour
@@ -15,6 +16,7 @@ public class TargetDetector : MonoBehaviour
     
     [SerializeField] private EnemyStats _stats;
     private SphereCollider _collider;
+    private FOVAgent _fovAgent;
 
     private void Awake() => Init();
 
@@ -90,9 +92,12 @@ public class TargetDetector : MonoBehaviour
     {
         _stats = GetComponentInParent<EnemyStats>();
         _collider = GetComponent<SphereCollider>();
+        _fovAgent = GetComponent<FOVAgent>();
         
         _collider.radius = _stats.DetectRange;
         _coroutine = null;
+        _fovAgent.sightAngle = _stats.ViewAngle;
+        _fovAgent.sightRange = _stats.DetectRange;
     }
 
     private void DrawArc(float range, Color color)

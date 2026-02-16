@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5703217427026619140}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_Quadruple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +83,10 @@ PrefabInstance:
     - target: {fileID: 4315529422256752096, guid: 3c1966dabaa8df742bdaeace5f47e217, type: 3}
       propertyPath: m_Name
       value: struct_Wall_A_Quadruple_yup
+      objectReference: {fileID: 0}
+    - target: {fileID: 4315529422256752096, guid: 3c1966dabaa8df742bdaeace5f47e217, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
