@@ -46,3 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stages:
   - {fileID: 5516892725271644748, guid: d36ead35be01ab04bac560af10aeb361, type: 3}
+  - {fileID: 5516892725271644748, guid: a01b43d8cda25864f9e1f6d3086474a6, type: 3}
+  _items:
+  - {fileID: 4641519253288239345, guid: a88f429f1a2f61f4585ea8990fdfdc43, type: 3}
+  - {fileID: 2846185854963966517, guid: c0ebaf4be0d7ef5449ab178442d8fe9e, type: 3}
