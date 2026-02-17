@@ -2,36 +2,37 @@ using UnityEngine;
 
 public class CameraSetter : MonoBehaviour
 {
-    private Camera _mainCam;
+    [SerializeField] private Vector3 _offset;
     [SerializeField][Range(0, 90)] private float _virtialAngleRange;
-    public bool _hasCameraControl { get; set; }
+    public bool _hasCameraControl { get; set; } = true;
+    private Camera _camera;
 
     private void Awake() => Init();
+    
+    private void Init()
+    {
+        _camera = Camera.main;
+    }
 
     private void LateUpdate()
     {
+        if(!_hasCameraControl) return;
+        
         SetPosition();
         SetRotateX();
     }
 
-    private void Init()
-    {
-        _mainCam = Camera.main;
-        _hasCameraControl = true;
-    }
-
     private void SetPosition()
     {
-        if(!_hasCameraControl) return;
-        _mainCam.transform.position = transform.position;
+        _camera.transform.position = transform.position + _offset;
     }
 
     private void SetRotateX()
     {
-        _mainCam.transform.rotation = Quaternion.Euler(
+        _camera.transform.rotation = Quaternion.Euler(
             _virtialAngleRange,
-            _mainCam.transform.rotation.eulerAngles.y,
-            _mainCam.transform.rotation.eulerAngles.z
+            _camera.transform.rotation.eulerAngles.y,
+            _camera.transform.rotation.eulerAngles.z
             );
     }
 }
