@@ -7,6 +7,7 @@ public class PlayerState : MonoBehaviour
 
     private PlayerMovement playerMovement;
     private PlayerDetector playerDetector;
+    private Animator _animator;
 
     private enum PlayerStates
     {
@@ -17,6 +18,12 @@ public class PlayerState : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerDetector = GetComponent<PlayerDetector>();
+        _animator = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+
     }
 
     private void PlayerStateCheck()
