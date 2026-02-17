@@ -19,6 +19,8 @@ public class TargetDetector : MonoBehaviour
     private FOVAgent _fovAgent;
 
     private void Awake() => Init();
+    private void OnEnable() => SetFovAgent(true);
+    private void OnDisable() => SetFovAgent(false);
 
     private void OnTriggerEnter(Collider other)
     {
@@ -70,6 +72,7 @@ public class TargetDetector : MonoBehaviour
 
             if (distanceToTarget > _stats.DetectRange * _stats.DetectRange) continue;
 
+            // 벡터의 내적.
             float dot = Vector3.Dot(transform.forward, directionToTarget);
             float cosHalf = Mathf.Cos(_stats.ViewAngle * 0.5f * Mathf.Deg2Rad);
 
@@ -96,8 +99,20 @@ public class TargetDetector : MonoBehaviour
         
         _collider.radius = _stats.DetectRange;
         _coroutine = null;
-        _fovAgent.sightAngle = _stats.ViewAngle;
-        _fovAgent.sightRange = _stats.DetectRange;
+    }
+
+    private void SetFovAgent(bool isSet)
+    {
+        if (isSet)
+        {
+            _fovAgent.sightAngle = _stats.ViewAngle;
+            _fovAgent.sightRange = _stats.DetectRange;
+        }
+        else
+        {
+            _fovAgent.sightAngle = 0;
+            _fovAgent.sightRange = 0;
+        }
     }
 
     private void DrawArc(float range, Color color)

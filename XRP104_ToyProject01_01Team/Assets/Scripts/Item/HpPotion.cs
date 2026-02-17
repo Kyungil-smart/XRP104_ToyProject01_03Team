@@ -15,5 +15,6 @@ public class HpPotion : ItemBase, IInteractable
     public void Interact(PlayerController controller)
     {
         controller.HealUp(_healValue);
+        Destroy(gameObject);
     }
 }

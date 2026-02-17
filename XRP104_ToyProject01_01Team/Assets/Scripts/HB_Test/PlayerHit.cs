@@ -18,7 +18,7 @@ public class PlayerHit : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damage)
     {
-        _currentPlayerHp = _playerController._hP;
+        _currentPlayerHp = _playerController._currentHp;
 
         _currentPlayerHp -= damage;
 
