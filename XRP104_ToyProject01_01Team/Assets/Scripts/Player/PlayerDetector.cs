@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerDetector : MonoBehaviour
 {
@@ -8,8 +9,8 @@ public class PlayerDetector : MonoBehaviour
     // [SerializeField] private LayerMask _targetLayer;
 
     // private Ray _ray;
-    private Transform _detectedTarget;
-    public bool isDetected => _detectedTarget != null;
+    public Transform DetectedTarget { get; private set; }
+    public bool isDetected => DetectedTarget != null;
 
     // private float minDistance = float.MaxValue;
 
@@ -38,56 +39,64 @@ public class PlayerDetector : MonoBehaviour
         {
             _targets.Remove(other.gameObject);
             
-            if(_targets.Count == 0) _detectedTarget = null;
+            if(_targets.Count == 0) DetectedTarget = null;
         }
     }
 
     private void OnDrawGizmos()
     {
-        if (_detectedTarget == null) return;
+        if (DetectedTarget == null) return;
         
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, _detectedTarget.position);
+        Gizmos.DrawLine(transform.position, DetectedTarget.position);
 
         // Gizmos.DrawRay(_ray.origin, _ray.direction * _rayLength);
+        
     }
-
-    // dd
     private void RayShot(Transform target)
     {
+        if (target == null) return;
+        
         Vector3 vectorToTarget = target.position - transform.position;
         Vector3 dir = vectorToTarget.normalized;
         float distance = vectorToTarget.magnitude;
         
-        Ray ray = new Ray(transform.position, dir);
+        Ray ray = new Ray(transform.position + new Vector3(0, 1, 0), dir);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, distance))
         {
             if(hit.transform.CompareTag("Enemy"))
             {
-                _detectedTarget = hit.transform;
+                DetectedTarget = hit.transform;
             }
             else
             {
-                _detectedTarget = null;
+                DetectedTarget = null;
             }
         }
         else
         {
-            _detectedTarget = null;
+            DetectedTarget = null;
         }
     }
 
     private Transform GetClosestTargetTransform()
     {
         if (_targets == null || _targets.Count == 0) return null;
-        
-        Transform target = _targets[0].transform;
-        float distance = Vector3.Distance(transform.position, target.position);
 
-        for (int i = 1; i < _targets.Count; i++)
+        Transform target = null;
+        float distance;
+
+        for (int i = 0; i < _targets.Count; i++)
         {
+            if (_targets[i] == null) continue;
+            
+            target = _targets[i].transform;
+            distance = Vector3.Distance(transform.position, target.position);
+
+            if (i == 0) continue;
+            
             float CurrDist = Vector3.Distance(transform.position, _targets[i].transform.position);
 
             if (CurrDist < distance)

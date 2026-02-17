@@ -15,5 +15,6 @@ public class SpeedPotion : ItemBase, IInteractable
     public void Interact(PlayerController controller)
     {
         controller.SpeedUp(_speedUpValue);
+        Destroy(gameObject);
     }
 }
